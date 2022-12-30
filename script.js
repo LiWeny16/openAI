@@ -1,113 +1,56 @@
-// import bot from '/assets/bot.svg'
-// import user from '/assets/user.svg'
+<!DOCTYPE html>
+<html lang="en">
 
-// import { load } from "cheerio"
-// import { application } from "express"
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <title>Codex</title>
+  <link rel="stylesheet" href="./public/cssStyle/main.css">
+  <link rel="stylesheet" href="./public/cssStyle/githubhljs.css">
+  <link rel="stylesheet" href="./public/cssStyle/githubMarkdownCss.css">
+  <link rel="stylesheet" href="./public/cssStyle/md.css">
+  <link rel="stylesheet" href="./public/cssStyle/keyframes.css">
+  <script src="./public/jsScript/showdown.min.js"></script>
+  
+  <script>
+    let nowLocation = window.location.href
+  </script>
+</head>
 
-const form = document.querySelector('form')
-const chatContainer = document.querySelector('#chat_container')
+<body>
+  <div id="header">
+    <div id="headerInner">
+      <div id="headerLeft">
+        <a class="noStylelabel" href=`${location}`>
+          <p2>ChatGPT OpenAi</p2>
+        </a>
+      </div>
+      <div id="headerRight">
+        <a class="noStylelabel" href="https://bigonion.cn">
+          <p2>首页</p2>
+        </a>
+        <a id="showAbout" class="noStylelabel" href="#">
+          <p2>关于</p2>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="app">
+    <div id="chat_container"></div>
+    <form id="formBox">
+      <textarea id="inputArea" name="prompt" cols="1" rows="1" placeholder="Ask chatGPT..."></textarea>
+      <button type="submit"><img src="./assets/send.svg" alt=""></button>
+    </form>
+  </div>
+  <div id="aboutBox">
+    <div id="markdownParser">
+      <article id="view-area" class="markdown-body">
+    </div>
+  </div>
+  <script type="module" src="script.js"></script>
+  <script src="./public/jsScript/mdParser.js"></script>
+</body>
 
-//////////////
-
-//////////////
-
-let loadInterval
-
-function loader(ele) {
-  ele.textContent = ""
-  loadInterval = setInterval(() => {
-    ele.textContent += "."
-    if (ele.textContent === "....") {
-      ele.textContent = ""
-    }
-  }, 300)
-}
-
-function typeText(element, text) {
-  let index = 0
-  let interval = setInterval(() => {
-    if (index < text.length) {
-      element.innerHTML += text.charAt(index)
-      index++
-    } else {
-      clearInterval(interval)
-    }
-  }, 20)
-
-}
-
-function generateUniqueId() {
-  const timestamp = Date.now()
-  const randomNumber = Math.random()
-  const hexadecimalString = randomNumber.toString(16)
-
-  return `id-${timestamp}-${hexadecimalString}`
-}
-
-function chatStripe(isAi, value, uniqueId) {
-  return (
-    `
-        <div class= "wrapper ${isAi && 'ai'}">
-            <div class = "chat">
-                <div class= "profile">
-                    <img 
-                    alt="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}"
-                    src="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}" 
-                     />
-                </div>
-                <div class="message" id=${uniqueId}>${value}</div>
-            </div>
-        <div>
-        `
-  )
-}
-
-const handleSubmit = async (e) => {
-  e.preventDefault()
-
-  const data = new FormData(form)
-  if (data.get('prompt').replace(/(\s)|(\\n)/g, "") === "") {
-    alert("你啥都没输入！")
-  } else {
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'), "yourQues") //data.get('表单的name属性 ')
-    form.reset()
-    const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, '', uniqueId)
-    chatContainer.scrollTop = chatContainer.scrollHeight
-    const messageDiv = document.getElementById(uniqueId)
-
-    loader(messageDiv)
-
-    //fetch 
-    // http://47.113.229.110:8082
-    // http://127.0.0.1:5500/client/#
-    const response = await fetch('http://47.113.229.110:8082', {
-      method: "POST",
-      headers: {
-        'Content-Type': "application/json"
-      },
-      body: JSON.stringify({
-        prompt: data.get('prompt')
-      })
-    })
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = ""
-    if (response.ok) {
-      const data = await response.json()
-      const parsedData = data.bot.trim()
-      typeText(messageDiv, parsedData)
-    } else {
-      // const err = await response.text()
-      messageDiv.innerHTML = "Somthing went wrong"
-    }
-  }
-
-}
-
-form.addEventListener('submit', handleSubmit)
-form.addEventListener('keydown', (e) => {
-  if (e.keyCode === 13 && e.ctrlKey) {
-    handleSubmit(e)
-  }
-})
-
+</html>

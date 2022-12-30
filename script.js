@@ -79,7 +79,9 @@ const handleSubmit = async (e) => {
     loader(messageDiv)
 
     //fetch 
-    const response = await fetch('http://localhost:8082/', {
+    // http://47.113.229.110:8082
+    // http://127.0.0.1:5500/client/#
+    const response = await fetch('http://47.113.229.110:8082', {
       method: "POST",
       headers: {
         'Content-Type': "application/json"
@@ -95,7 +97,7 @@ const handleSubmit = async (e) => {
       const parsedData = data.bot.trim()
       typeText(messageDiv, parsedData)
     } else {
-      const err = await response.text()
+      // const err = await response.text()
       messageDiv.innerHTML = "Somthing went wrong"
     }
   }

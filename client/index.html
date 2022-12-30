@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codex</title>
+  <link rel="stylesheet" href="./public/cssStyle/main.css">
+  <link rel="stylesheet" href="./public/cssStyle/githubhljs.css">
+  <link rel="stylesheet" href="./public/cssStyle/githubMarkdownCss.css">
+  <link rel="stylesheet" href="./public/cssStyle/md.css">
+  <link rel="stylesheet" href="./public/cssStyle/keyframes.css">
+  <script src="./public/jsScript/showdown.min.js"></script>
+  
+  <script>
+    let nowLocation = window.location.href
+  </script>
+</head>
+
+<body>
+  <div id="header">
+    <div id="headerInner">
+      <div id="headerLeft">
+        <a class="noStylelabel" href=`${location}`>
+          <p2>ChatGPT OpenAi</p2>
+        </a>
+      </div>
+      <div id="headerRight">
+        <a class="noStylelabel" href="https://bigonion.cn">
+          <p2>首页</p2>
+        </a>
+        <a id="showAbout" class="noStylelabel" href="#">
+          <p2>关于</p2>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="app">
+    <div id="chat_container"></div>
+    <form id="formBox">
+      <textarea id="inputArea" name="prompt" cols="1" rows="1" placeholder="Ask chatGPT..."></textarea>
+      <button type="submit"><img src="./assets/send.svg" alt=""></button>
+    </form>
+  </div>
+  <div id="aboutBox">
+    <div id="markdownParser">
+      <article id="view-area" class="markdown-body">
+    </div>
+  </div>
+  <script type="module" src="script.js"></script>
+  <script src="./public/jsScript/mdParser.js"></script>
+</body>
+
+</html>

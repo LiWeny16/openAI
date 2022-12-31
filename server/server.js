@@ -2,22 +2,39 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
+import https from 'https'
+import http from 'http'
+import fs from 'fs'
+
+const app = express()
 const port = 8082
+//同步读取密钥和签名证书
+var options = {
+    key: fs.readFileSync('./SSLcer/key.key'),
+    cert: fs.readFileSync('./SSLcer/pub.crt')
+}
+var httpsServer = https.createServer(options, app)
+var httpServer = http.createServer(app)
+
+
 
 dotenv.config()
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY2,
 })
 
 const openai = new OpenAIApi(configuration)
-const app = express()
 app.use(cors())
 app.use(express.json())
 
+app.get('/hello', function (req, res, next) {
+    res.send('Hello Express+https,everything is ok')
+})
+
 app.get('/', async (req, res) => {
     res.status(200).send({
-        message: 'Hello from Codex',
+        message: 'Hello from Codex,please use POST to get data',
     })
 })
 
@@ -34,12 +51,21 @@ app.post('/', async (req, res) => {
             presence_penalty: 0,
             // stop: ["\"\"\""],
         })
-        res.status(200).send({
+        res.send({
             bot: response.data.choices[0].text
         })
     } catch (err) {
         console.log(err)
-        res.status.send({ err })
+        res.send(`{"msg":"有一些错误发生了","err":"${err}"}`)
     }
 })
-app.listen(port, () => { console.log(`running at ${port}`) })
+// app.listen(port, () => { console.log(`running at ${port}`) })
+
+//https监听3000端口
+httpsServer.listen(port, () => {
+    console.log("https is running at" + " " + port)
+})
+//http监听3001端口
+httpServer.listen(port + 1, () => {
+    console.log("http is running at" + " " + (port + 1))
+})

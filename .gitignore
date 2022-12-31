@@ -27,3 +27,4 @@ dist-ssr
 *.key
 *.pem
 *.crt
+*.env

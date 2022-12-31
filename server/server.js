@@ -21,7 +21,7 @@ var httpServer = http.createServer(app)
 dotenv.config()
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY2,
+    apiKey: process.env.OPENAI_API_KEY1,
 })
 
 const openai = new OpenAIApi(configuration)
@@ -61,11 +61,11 @@ app.post('/', async (req, res) => {
 })
 // app.listen(port, () => { console.log(`running at ${port}`) })
 
-//https监听3000端口
+//https监听8082端口
 httpsServer.listen(port, () => {
     console.log("https is running at" + " " + port)
 })
-//http监听3001端口
+//http监听8083端口
 httpServer.listen(port + 1, () => {
     console.log("http is running at" + " " + (port + 1))
 })

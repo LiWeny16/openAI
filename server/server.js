@@ -21,7 +21,7 @@ var httpServer = http.createServer(app)
 dotenv.config()
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY1,
+    apiKey: process.env.OPENAI_API_KEY3,
 })
 
 const openai = new OpenAIApi(configuration)

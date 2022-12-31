@@ -82,7 +82,7 @@ const handleSubmit = async (e) => {
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
     try {
-      const response = await fetch('https://ecs.bigonion.cn:8082', {
+      const response = await fetch('https://ecs.bigonion.cn:8082/', {
         method: "POST",
         headers: {
           'Content-Type': "application/json"

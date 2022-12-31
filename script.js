@@ -103,7 +103,7 @@ const handleSubmit = async (e) => {
       }
     } catch (err) {
       clearInterval(loadInterval)
-      messageDiv.innerHTML = "emm有一些网络错误发生了,别担心,不是你的问题，是我们的问题"
+      messageDiv.innerHTML = "emm有一些网络错误发生了,别担心,不是你的问题，是我们的"
       console.log("err:"+" "+err);
     }
 

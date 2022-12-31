@@ -40,7 +40,8 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     try {
-        const prompt = req.body.prompt
+        let prompt = req.body.prompt
+        console.log(prompt);
         const response = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: `${prompt}`,

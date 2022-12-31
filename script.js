@@ -81,25 +81,32 @@ const handleSubmit = async (e) => {
     //fetch 
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
-    const response = await fetch('https://47.113.229.110:8082', {
-      method: "POST",
-      headers: {
-        'Content-Type': "application/json"
-      },
-      body: JSON.stringify({
-        prompt: data.get('prompt')
+    try {
+      const response = await fetch('https://ecs.bigonion.cn:8082', {
+        method: "POST",
+        headers: {
+          'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+          prompt: data.get('prompt')
+        })
       })
-    })
-    clearInterval(loadInterval)
-    messageDiv.innerHTML = ""
-    if (response.ok) {
-      const data = await response.json()
-      const parsedData = data.bot.trim()
-      typeText(messageDiv, parsedData)
-    } else {
-      // const err = await response.text()
-      messageDiv.innerHTML = "Somthing went wrong"
+      clearInterval(loadInterval)
+      messageDiv.innerHTML = ""
+      if (response.ok) {
+        const data = await response.json()
+        const parsedData = data.bot.trim()
+        typeText(messageDiv, parsedData)
+      } else {
+        // const err = await response.text()
+        messageDiv.innerHTML = "Somthing went wrong"
+      }
+    } catch (err) {
+      clearInterval(loadInterval)
+      messageDiv.innerHTML = "emm有一些网络错误发生了,别担心,不是你的问题，是我们的问题"
+      console.log("err:"+" "+err);
     }
+
   }
 
 }

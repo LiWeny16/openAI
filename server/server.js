@@ -2,18 +2,18 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
-import https from 'https'
+// import https from 'https'
 import http from 'http'
-import fs from 'fs'
+// import fs from 'fs'
 
 const app = express()
 const port = 8082
 //同步读取密钥和签名证书
-var options = {
-    key: fs.readFileSync('./SSLcer/key.key'),
-    cert: fs.readFileSync('./SSLcer/pub.crt')
-}
-var httpsServer = https.createServer(options, app)
+// var options = {
+//     key: fs.readFileSync('./SSLcer/key.key'),
+//     cert: fs.readFileSync('./SSLcer/pub.crt')
+// }
+// var httpsServer = https.createServer(options, app)
 var httpServer = http.createServer(app)
 
 
@@ -63,9 +63,9 @@ app.post('/', async (req, res) => {
 // app.listen(port, () => { console.log(`running at ${port}`) })
 
 //https监听8082端口
-httpsServer.listen(port, () => {
-    console.log("https is running at" + " " + port)
-})
+// httpsServer.listen(port, () => {
+//     console.log("https is running at" + " " + port)
+// })
 //http监听8083端口
 httpServer.listen(port + 1, () => {
     console.log("http is running at" + " " + (port + 1))

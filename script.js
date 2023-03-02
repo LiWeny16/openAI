@@ -82,7 +82,7 @@ const handleSubmit = async (e) => {
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
     try {
-      const response = await fetch('https://ecs.bigonion.cn:8082', {
+      const response = await fetch('#', {
         method: "POST",
         headers: {
           'Content-Type': "application/json"
@@ -99,11 +99,11 @@ const handleSubmit = async (e) => {
         typeText(messageDiv, parsedData)
       } else {
         // const err = await response.text()
-        messageDiv.innerHTML = "Somthing went wrong"
+        messageDiv.innerHTML = "【注意】由于不可抗力，本服务暂时停止"
       }
     } catch (err) {
       clearInterval(loadInterval)
-      messageDiv.innerHTML = "emm有一些网络错误发生了,别担心,不是你的问题，是我们的"
+      messageDiv.innerHTML = "【注意】由于不可抗力，本服务暂时停止"
       console.log("err:"+" "+err);
     }
 

@@ -1,0 +1,32 @@
+/* 响应式布局 */
+@media (max-width: 320px) {
+    #\ headerRight {
+        font-size: 15px;
+      }
+      #headerLeft{
+        font-size: 20px;
+      }
+}
+
+@media (min-width: 321px) and (max-width: 375px) {
+    #\ headerRight {
+        font-size: 15px;
+      }
+}
+
+@media (min-width: 376px) and (max-width: 425px) {
+}
+
+@media (min-width: 426px) and (max-width: 768px) {
+}
+/* 电脑端 */
+@media (min-width: 769px) and (max-width: 1236px) {
+
+}
+/* 手机端 */
+@media (max-width: 307px) {
+
+}
+
+@media (max-height: 760px) and (max-width: 760px) {
+}

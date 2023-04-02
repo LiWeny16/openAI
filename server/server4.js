@@ -4,10 +4,15 @@ import cors from 'cors'
 // import https from 'https'
 import http from 'http'
 import axios from "axios"
+import HttpsProxyAgent from 'https-proxy-agent'
+import HttpProxyAgent from 'http-proxy-agent'
 dotenv.config()
 
 const port = 8082
 const app = express()
+const openAIKeys = process.env.OPENAI_API_KEY1
+const httpAgent = new HttpsProxyAgent("http://10.0.0.200:1082")
+const httpsAgent = new HttpProxyAgent("http://10.0.0.200:1082")
 // var options = {
 //     key: fs.readFileSync('./SSLcer/'),
 //     cert: fs.readFileSync('./SSLcer/pub.crt')
@@ -29,13 +34,13 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
     try {
         let prompt = req.body.prompt
-        console.log(prompt);
+        console.log("question: "+prompt);
         const response = await ask(`${prompt}`)
         res.send({
             bot: response
         })
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         res.send(`{"msg":"有一些错误发生了","err":"${err}"}`)
     }
 })
@@ -43,7 +48,6 @@ app.post('/', async (req, res) => {
 
 
 
-const openAIKeys = process.env.OPENAI_API_KEY2
 const ask = async (input) => {
     try {
         let data = {
@@ -62,20 +66,26 @@ const ask = async (input) => {
                 'Authorization': `Bearer ${openAIKeys}`
             },
             data: data,
-
+            // httpAgent: httpAgent,
+            // httpsAgent: httpsAgent,
+            Proxy: {
+                host: "10.0.0.200",
+                port:1082,
+                protocol:"https"
+            }
         };
         let completion = await axios(config)
             .then((response) => {
-                console.log("response.data:", JSON.stringify(response.data));
+                // console.log("response.data:", JSON.stringify(response.data));
                 return response.data.choices[0].message.content
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
             });
 
         return completion
     } catch (error) {
-        console.log(error);
+        // console.log(error);
     }
 };
 

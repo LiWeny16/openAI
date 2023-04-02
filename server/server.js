@@ -4,6 +4,8 @@ import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
 // import https from 'https'
 import http from 'http'
+import HttpsProxyAgent from 'https-proxy-agent'
+import HttpProxyAgent from 'http-proxy-agent'
 // import fs from 'fs'
 
 const app = express()
@@ -15,7 +17,8 @@ const port = 8082
 // }
 // var httpsServer = https.createServer(options, app)
 var httpServer = http.createServer(app)
-
+const httpAgent = new HttpsProxyAgent("http://127.0.0.1:10809")
+const httpsAgent = new HttpProxyAgent("http://127.0.0.1:10809")
 
 
 dotenv.config()
@@ -42,16 +45,19 @@ app.post('/', async (req, res) => {
     try {
         let prompt = req.body.prompt
         console.log(prompt);
-        const response = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: `${prompt}`,
-            temperature: 0,
-            max_tokens: 3000,
-            top_p: 1,
-            frequency_penalty: 0.5,
-            presence_penalty: 0,
-            // stop: ["\"\"\""],
-        })
+        const response = await openai.createCompletion(
+            {
+                // model: "text-davinci-003",
+                // prompt: `hello world`,
+                // temperature: 0,
+                // max_tokens: 3000,
+                // top_p: 1,
+                // frequency_penalty: 0.5,
+                // presence_penalty: 0,
+                model: 'gpt-3.5-turbo',
+                messages: [{ role: 'user', content: 'Hello!' }]
+                // stop: ["\"\"\""],
+            })
         res.send({
             bot: response.data.choices[0].text
         })
@@ -62,7 +68,7 @@ app.post('/', async (req, res) => {
 })
 // app.listen(port, () => { console.log(`running at ${port}`) })
 
-//https监听8082端口
+// https监听8082端口
 // httpsServer.listen(port, () => {
 //     console.log("https is running at" + " " + port)
 // })

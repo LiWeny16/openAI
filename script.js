@@ -24,17 +24,19 @@ function loader(ele) {
 }
 
 function typeText(element, text) {
-  let index = 0
-  let interval = setInterval(() => {
-    if (index < text.length) {
-      element.innerHTML += text.charAt(index)
-      // element.innerHTML = parseGptAnswer(element.innerHTML)
-      index++
-    } else {
-      clearInterval(interval)
-    }
-  }, 20)
-
+  return new Promise((resolve) => {
+    let index = 0
+    let interval = setInterval(() => {
+      if (index < text.length) {
+        element.innerHTML += text.charAt(index)
+        index++
+      } else {
+        clearInterval(interval)
+        // element.innerHTML = markedParse(element.innerHTML)
+      }
+     resolve("end")
+    }, 25)
+  })
 }
 
 function generateUniqueId() {
@@ -52,6 +54,7 @@ function chatStripe(isAi, value, uniqueId) {
             <div class = "chat">
                 <div class= "profile">
                     <img 
+                    draggable = "false"
                     alt="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}"
                     src="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}" 
                      />
@@ -96,8 +99,14 @@ const handleSubmit = async (e) => {
       messageDiv.innerHTML = ""
       if (response.ok) {
         const data = await response.json()
-        const parsedData = data.bot.trim()
-        typeText(messageDiv, parsedData)
+        let parsedData = data.bot.trim()
+        parsedData = parsedData.replace(/\&lt;/g, `<`)
+        parsedData = parsedData.replace(/\&gt;/g, `>`)
+        console.log(parsedData);
+        // parsedData = marked.parse(parsedData)
+        typeText(messageDiv, parsedData).then(()=>{
+        // 
+        })
       } else {
         // const err = await response.text()
         messageDiv.innerHTML = "【网络错误】别骂了别骂了，在修了在修了😅"

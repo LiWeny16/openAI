@@ -6,11 +6,16 @@
 }
 #view-area {
     /* width: 100%; */
-    width: 45%;
+    width: 65%;
+    height: 96%;
     border: 1px solid #111;
     border-radius: 11px;
     transition: width 2s, height 2s, transform 2s;
     animation: fadeIn 0.5s 1;
+    overflow-y: scroll;
+}
+#view-area::-webkit-scrollbar{
+    width: 0 !important;
 }
 
 .markdown-body {

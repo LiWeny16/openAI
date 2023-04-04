@@ -1,0 +1,9 @@
+#aboutBox{
+    display: none;
+    justify-content: center;
+    /* width: 80%; */
+}
+#markdownParser{
+    display: flex;
+    justify-content: center;
+}

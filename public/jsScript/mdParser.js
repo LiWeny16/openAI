@@ -32,12 +32,13 @@ function mdConverter() {
 mdConverter()
 
 //////Show and hidden Event//////
+// kit.setCookie("notes",10,)
 
 document.getElementById('closeAboutSvg').addEventListener('click',()=>{
     document.getElementById('aboutBox').style.display="none"
 })
 document.getElementById('showAbout').addEventListener('click',()=>{
-    document.getElementById('aboutBox').style.display="block"
+    document.getElementById('aboutBox').style.display="flex"
 })
 
 // 解析gpt markdown回答

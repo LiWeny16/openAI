@@ -28,6 +28,7 @@ function typeText(element, text) {
   let interval = setInterval(() => {
     if (index < text.length) {
       element.innerHTML += text.charAt(index)
+      element.innerHTML = parseGptAnswer(element.innerHTML)
       index++
     } else {
       clearInterval(interval)
@@ -82,7 +83,7 @@ const handleSubmit = async (e) => {
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
     try {
-      const response = await fetch('https://bd0fa35.r8.cpolar.top/', {
+      const response = await fetch('https://d3b24d7.r8.cpolar.top/', {
         method: "POST",
         headers: {
           'Content-Type': "application/json"
@@ -99,12 +100,12 @@ const handleSubmit = async (e) => {
         typeText(messageDiv, parsedData)
       } else {
         // const err = await response.text()
-        messageDiv.innerHTML = "【网络错误】你好，不是你的问题，是我们的"
+        messageDiv.innerHTML = "【网络错误】别骂了别骂了，在修了在修了😅"
       }
     } catch (err) {
       clearInterval(loadInterval)
-      messageDiv.innerHTML = "【网络错误】你好，不是你的问题，是我们的"
-      console.log("err:"+" "+err);
+      messageDiv.innerHTML = "【网络错误】别骂了别骂了，在修了在修了😅"
+      console.log("err:" + " " + err);
     }
 
   }

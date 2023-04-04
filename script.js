@@ -99,11 +99,11 @@ const handleSubmit = async (e) => {
         typeText(messageDiv, parsedData)
       } else {
         // const err = await response.text()
-        messageDiv.innerHTML = "【注意】由于不可抗力，本服务暂时停止"
+        messageDiv.innerHTML = "【网络错误】你好，不是你的问题，是我们的"
       }
     } catch (err) {
       clearInterval(loadInterval)
-      messageDiv.innerHTML = "【注意】由于不可抗力，本服务暂时停止"
+      messageDiv.innerHTML = "【网络错误】你好，不是你的问题，是我们的"
       console.log("err:"+" "+err);
     }
 

@@ -28,7 +28,7 @@ function typeText(element, text) {
   let interval = setInterval(() => {
     if (index < text.length) {
       element.innerHTML += text.charAt(index)
-      element.innerHTML = parseGptAnswer(element.innerHTML)
+      // element.innerHTML = parseGptAnswer(element.innerHTML)
       index++
     } else {
       clearInterval(interval)

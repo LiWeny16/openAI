@@ -32,10 +32,11 @@ function typeText(element, text) {
         index++
       } else {
         clearInterval(interval)
-        // element.innerHTML = markedParse(element.innerHTML)
+        //
       }
-     resolve("end")
+
     }, 25)
+    resolve("end")
   })
 }
 
@@ -104,8 +105,10 @@ const handleSubmit = async (e) => {
         parsedData = parsedData.replace(/\&gt;/g, `>`)
         console.log(parsedData);
         // parsedData = marked.parse(parsedData)
-        typeText(messageDiv, parsedData).then(()=>{
-        // 
+        typeText(messageDiv, parsedData).then((e) => {
+          console.log(e);
+        }).then(()=>{
+          messageDiv.innerHTML = marked.parse(messageDiv.innerHTML)
         })
       } else {
         // const err = await response.text()

@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
     try {
-      const response = await fetch('https://6ba3ea08.r2.cpolar.top/', {
+      const response = await fetch('https://api.bigonion.cn/', {
         method: "POST",
         headers: {
           'Content-Type': "application/json"

@@ -16,6 +16,9 @@
   #\ headerRight {
     font-size: 15px;
   }
+  #headerLeft {
+    font-size:3vh;
+  }
   #view-area {
     width: 85%;
     translate: 0px -43px;
@@ -23,6 +26,9 @@
 }
 
 @media (min-width: 376px) and (max-width: 425px) {
+  #headerLeft {
+    font-size:3vh;
+  }
   #view-area {
     width: 85%;
     translate: 0px -43px;

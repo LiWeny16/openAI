@@ -1,10 +1,10 @@
 /* 响应式布局 */
 @media (max-width: 320px) {
   #\ headerRight {
-    font-size: 15px;
+    font-size: 2vh;
   }
   #headerLeft {
-    font-size: 20px;
+    font-size:3vh;
   }
   #view-area {
     width: 85%;

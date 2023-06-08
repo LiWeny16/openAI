@@ -50,7 +50,7 @@ function typeText(element, text) {
         clearInterval(interval)
       }
 
-    }, 35)
+    }, 25)
     resolve("end")
   })
 }

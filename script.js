@@ -24,15 +24,30 @@ function loader(ele) {
 }
 
 function typeText(element, text) {
+  let rawText = text
+  text = text.replace(/\n/g, "\n ")
+
   return new Promise((resolve) => {
     let index = 0
     let interval = setInterval(() => {
       if (index < text.length) {
-        element.innerHTML += text.charAt(index)
+        element.innerHTML += text[index]
+        element.innerHTML = element.innerHTML.replace(/\n /g, "<br />")
+        goToFooter(document.getElementById("chat_container"))
         index++
-      } else {
+      }
+      else if (index == text.length) {
+        let mdText = marked.parse(text.replace(/\n /g, "<br />"))
+        if (mdText.match(/\<code\>/)) { //有代码段
+          element.innerHTML = marked.parse(text.replace(/\n /g, "  \n"))
+        } else {
+          element.innerHTML = marked.parse(text.replace(/\n /g, "  \n"))
+        }
+        hljs.highlightAll()
+        index++
+      }
+      else {
         clearInterval(interval)
-        //
       }
 
     }, 25)
@@ -60,7 +75,7 @@ function chatStripe(isAi, value, uniqueId) {
                     src="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}" 
                      />
                 </div>
-                <div class="message" id=${uniqueId}>${value}</div>
+                <div class="message markdown-body-dark" id=${uniqueId}>${value}</div>
             </div>
         <div>
         `
@@ -105,11 +120,8 @@ const handleSubmit = async (e) => {
         parsedData = parsedData.replace(/\&gt;/g, `>`)
         console.log(parsedData);
         // parsedData = marked.parse(parsedData)
-        typeText(messageDiv, parsedData).then((e) => {
-          console.log(e);
-        }).then(()=>{
-          messageDiv.innerHTML = marked.parse(messageDiv.innerHTML)
-        })
+        // messageDiv.innerHTML =parsedData
+        typeText(messageDiv, parsedData)
       } else {
         // const err = await response.text()
         messageDiv.innerHTML = "【网络错误】别骂了别骂了，在修了在修了😅"
@@ -131,3 +143,7 @@ form.addEventListener('keydown', (e) => {
   }
 })
 
+function goToFooter(ele) {
+  var div = ele;
+  div.scrollTop = div.scrollHeight;
+}

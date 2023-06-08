@@ -24,25 +24,25 @@ function loader(ele) {
 }
 
 function typeText(element, text) {
-  let rawText = text
-  text = text.replace(/\n/g, "\n ")
+  // let rawText = text
+  text = text.replace(/\n/g, "  \n")
 
   return new Promise((resolve) => {
     let index = 0
     let interval = setInterval(() => {
       if (index < text.length) {
         element.innerHTML += text[index]
-        element.innerHTML = element.innerHTML.replace(/\n /g, "<br />")
+        element.innerHTML = element.innerHTML.replace(/  \n/g, "<br />")
+        if (element.innerHTML.match(/```/g) ? (element.innerHTML.match(/```/g).length % 2 === 0) : false) {
+          element.innerHTML = marked.parse(text.substring(0,index+1))
+          hljs.highlightAll()
+        }
         goToFooter(document.getElementById("chat_container"))
         index++
       }
       else if (index == text.length) {
-        let mdText = marked.parse(text.replace(/\n /g, "<br />"))
-        if (mdText.match(/\<code\>/)) { //有代码段
-          element.innerHTML = marked.parse(text.replace(/\n /g, "  \n"))
-        } else {
-          element.innerHTML = marked.parse(text.replace(/\n /g, "  \n"))
-        }
+        // let mdText = marked.parse(text.replace(/\n /g, "<br />"))
+        element.innerHTML = marked.parse(text)
         hljs.highlightAll()
         index++
       }
@@ -50,7 +50,7 @@ function typeText(element, text) {
         clearInterval(interval)
       }
 
-    }, 25)
+    }, 35)
     resolve("end")
   })
 }

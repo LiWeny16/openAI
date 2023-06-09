@@ -1,10 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap");
 
+@font-face {
+  font-family: 'Futura';
+  src: url('../fonts/transfonter.org-20230609-130528/Futura-Medium.woff2') format('woff2'),
+      url('../fonts/transfonter.org-20230609-130528/Futura-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   /* font-family: "Alegreya Sans", sans-serif; */
+  font-family: Futura !important;
 }
 
 body {
@@ -50,7 +59,7 @@ body {
 }
 
 .ai {
-  background: #40414F;
+  background: #40414f;
 }
 
 .chat {
@@ -69,7 +78,7 @@ body {
   height: 36px;
   border-radius: 5px;
 
-  background: #5436DA;
+  background: #5436da;
 
   display: flex;
   justify-content: center;
@@ -117,8 +126,8 @@ form {
   max-width: 1280px;
   margin: 0 auto;
   padding: 10px;
-  background: #40414F;
-
+  background: #40414f;
+  transition: 0.6s;
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -170,8 +179,19 @@ form img {
 }
 
 #formBox {
-  border-radius: 8px;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 14px;
+  transition: 1s;
 }
+/* #form:hover{
+  transform:rotateX(30)
+} */
+#inputArea {
+  transition: 0.6s;
+}
+/* #inputArea:active{
+  transform:scale(1.2)
+} */
 
 .noStylelabel {
   text-decoration: none;
@@ -186,11 +206,11 @@ form img {
   right: 0;
   bottom: 0;
 }
-#closeAbout{
+#closeAbout {
   text-align: right;
   line-height: 0px;
 }
-.closeSvg{
+.closeSvg {
   width: 20px;
 }
 p2 {

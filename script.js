@@ -30,14 +30,22 @@ function typeText(element, text) {
   return new Promise((resolve) => {
     let index = 0
     let interval = setInterval(() => {
+
       if (index < text.length) {
+        if (index == 0 || index == 1) {
+          goToFooter(document.getElementById("chat_container"))
+        }
         element.innerHTML += text[index]
         element.innerHTML = element.innerHTML.replace(/  \n/g, "<br />")
         if (element.innerHTML.match(/```/g) ? (element.innerHTML.match(/```/g).length % 2 === 0) : false) {
           element.innerHTML = marked.parse(text.substring(0, index + 1))
           hljs.highlightAll()
+          goToFooter(document.getElementById("chat_container"))
         }
-        goToFooter(document.getElementById("chat_container"))
+        if (document.getElementById("chat_container").scrollHeight - (document.getElementById("chat_container").scrollTop + document.getElementById("chat_container").clientHeight) < 45) {
+          goToFooter(document.getElementById("chat_container"))
+        }
+
         index++
       }
       else if (index == text.length) {
@@ -116,7 +124,13 @@ const handleSubmit = async (e) => {
       messageDiv.innerHTML = ""
       if (response.ok) {
         const data = await response.json()
-        let parsedData = data.bot.trim()
+        let parsedData
+        try {
+          parsedData = data.bot.trim()
+        } catch (error) {
+          console.log(data.bot);
+        }
+
         parsedData = parsedData.replace(/\&lt;/g, `<`)
         parsedData = parsedData.replace(/\&gt;/g, `>`)
         console.log(parsedData);

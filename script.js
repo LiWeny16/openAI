@@ -138,11 +138,11 @@ const handleSubmit = async (e) => {
         // messageDiv.innerHTML =parsedData
         typeText(messageDiv, parsedData)
       } else {
-        messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，7.18号之前暂时无法保证稳定性😥"
+        messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，7.18之前暂时停止维护"
       }
     } catch (err) {
       clearInterval(loadInterval)
-      messageDiv.innerHTML = "【网络错误】请多尝试一次ヾ(•ω•`)o！"
+      messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，7.18之前暂时停止维护"
       console.log("err:" + " " + err);
     }
 

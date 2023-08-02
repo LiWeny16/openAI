@@ -1,8 +1,9 @@
 import aboutMd from "../source/about.md?raw"
 import * as marked_esm from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
+import shutDownSvgSrc from "@Image/关闭.svg"
 let shutDownSvg = `
 <div class="closeBox" id="closeAbout">
-<img id="closeAboutSvg" class="closeSvg" src="./assets/关闭.svg" alt="">
+<img id="closeAboutSvg" class="closeSvg" src=${shutDownSvgSrc} alt="shut">
 </div>
 `
 document.getElementById('view-area').innerHTML = shutDownSvg + md2Html(aboutMd)

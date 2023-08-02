@@ -4,6 +4,13 @@ import { marked } from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
 import axios from "axios"
 import "./public/jsScript/mdParser.js"
 
+/**
+ * @description 导入Svg资源
+*/
+import botSvg from "@Image/bot.svg"
+import userSvg from "@Image/user.svg"
+
+
 import "./public/cssStyle/markdown-github-dark.css"
 import "./public/cssStyle/markdown-github.css"
 import "./public/cssStyle/hljs.min.css"
@@ -107,8 +114,8 @@ function chatStripe(isAi, value, uniqueId) {
                 <div class= "profile">
                     <img 
                     draggable = "false"
-                    alt="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}"
-                    src="${isAi ? "./assets/bot.svg" : "./assets/user.svg"}" 
+                    alt="${isAi ? "bot" : "user"}"
+                    src="${isAi ? `${botSvg}` : `${userSvg}`}" 
                      />
                 </div>
                 <div class="message markdown-body-dark" id=${uniqueId}>${value}</div>
@@ -159,18 +166,24 @@ const handleSubmit = async (e) => {
     // 请不要盗取我的Token，仅供大家学习使用，token是真金白银买的
     axios(config)
       .then(function (response) {
-        let answer = response.data.choices[0].message.content
+        let answer
+        try {
+          answer= response.data.choices[0].message.content
+        } catch (error) {
+          messageDiv.innerHTML = "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫"
+        }
         let parsedData = answer.replace(/\&lt;/g, `<`)
         parsedData = parsedData.replace(/\&gt;/g, `>`)
+
         return parsedData
-        // console.log(response.data.choices[0].message.content);
       }).then((parsedData) => {
         clearInterval(loadInterval)
         messageDiv.innerHTML = ""
         typeText(messageDiv, parsedData)
       })
       .catch(function (error) {
-        messageDiv.innerHTML = "【网络错误】请重新尝试，如仍然失败，请联系网络管理员😅"
+        messageDiv.innerHTML = "【网络错误】请重新尝试，如仍然失败，请关闭梯子重新尝试😅"
+        clearInterval(loadInterval)
         console.log(error);
       });
     //fetch 

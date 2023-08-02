@@ -1,14 +1,41 @@
-// import bot from '/assets/bot.svg'
-// import user from '/assets/user.svg'
+import kit from "https://unpkg.com/bigonion-kit@0.11.2/esm/esm-kit.mjs"
+import hljs from "https://npm.elemecdn.com/@highlightjs/cdn-assets@11.6.0/es/highlight.min.js"
+import { marked } from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
+import axios from "axios"
+import "./public/jsScript/mdParser.js"
 
-// import { load } from "cheerio"
-// import { application } from "express"
+import "./public/cssStyle/markdown-github-dark.css"
+import "./public/cssStyle/markdown-github.css"
+import "./public/cssStyle/hljs.min.css"
+
+import "./public/cssStyle/md.css"
+import "./public/cssStyle/keyframes.css"
+import "./public/cssStyle/response.css"
+import "./public/cssStyle/index.css"
+import "./public/cssStyle/main.css"
+
+
+
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
 
 //////////////
+class settingsClass {
+  markedInit() {
+    marked.use({
+      mangle: false,
+      headerIds: false,
+      strict: false,
+    });
+  }
+}
 
+function allInit() {
+  const settings = new settingsClass()
+  settings.markedInit()
+}
+allInit()
 //////////////
 
 let loadInterval
@@ -107,44 +134,83 @@ const handleSubmit = async (e) => {
 
     loader(messageDiv)
 
+
+    var data_send = JSON.stringify({
+      "messages": [
+        {
+          "content": data.get('prompt'),
+          "role": "user"
+        }
+      ],
+      "model": "gpt-3.5-turbo",
+      "stream": false,
+      // "text_moderation": true
+    });
+
+    var config = {
+      method: 'post',
+      url: 'https://go.every-api.com/v1/chat/completions',
+      headers: {
+        'Authorization': 'Bearer argyhl-mKcVN6MEnHZQRCtG213iDtTO4iix4PimROUcQS783OCvkRdk',
+        'Content-Type': 'application/json'
+      },
+      data: data_send
+    };
+    // 请不要盗取我的Token，仅供大家学习使用，token是真金白银买的
+    axios(config)
+      .then(function (response) {
+        let answer = response.data.choices[0].message.content
+        let parsedData = answer.replace(/\&lt;/g, `<`)
+        parsedData = parsedData.replace(/\&gt;/g, `>`)
+        return parsedData
+        // console.log(response.data.choices[0].message.content);
+      }).then((parsedData) => {
+        clearInterval(loadInterval)
+        messageDiv.innerHTML = ""
+        typeText(messageDiv, parsedData)
+      })
+      .catch(function (error) {
+        messageDiv.innerHTML = "【网络错误】请重新尝试，如仍然失败，请联系网络管理员😅"
+        console.log(error);
+      });
     //fetch 
     // http://47.113.229.110:8082
     // http://127.0.0.1:5500/client/#
-    try {
-      const response = await fetch('https://api.bigonion.cn/', {
-        method: "POST",
-        headers: {
-          'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-          prompt: data.get('prompt')
-        })
-      })
-      clearInterval(loadInterval)
-      messageDiv.innerHTML = ""
-      if (response.ok) {
-        const data = await response.json()
-        let parsedData
-        try {
-          parsedData = data.bot.trim()
-        } catch (error) {
-          console.log(data.bot);
-        }
+    // try {
+    //   const response = await fetch('https://api.bigonion.cn/', {
+    //     method: "POST",
+    //     headers: {
+    //       'Content-Type': "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //       prompt: data.get('prompt')
+    //     })
+    //   })
+    //   clearInterval(loadInterval)
+    //   messageDiv.innerHTML = ""
+    //   if (response.ok) {
+    //     const data = await response.json()
+    //     let parsedData
+    //     try {
+    //       parsedData = data.bot.trim()
+    //     } catch (error) {
+    //       console.log(data.bot);
+    //     }
 
-        parsedData = parsedData.replace(/\&lt;/g, `<`)
-        parsedData = parsedData.replace(/\&gt;/g, `>`)
-        console.log(parsedData);
-        // parsedData = marked.parse(parsedData)
-        // messageDiv.innerHTML =parsedData
-        typeText(messageDiv, parsedData)
-      } else {
-        messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
-      }
-    } catch (err) {
-      clearInterval(loadInterval)
-      messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
-      console.log("err:" + " " + err);
-    }
+    //     parsedData = parsedData.replace(/\&lt;/g, `<`)
+    //     parsedData = parsedData.replace(/\&gt;/g, `>`)
+    //     console.log(parsedData);
+    //     // parsedData = marked.parse(parsedData)
+    //     // messageDiv.innerHTML =parsedData
+    //     typeText(messageDiv, parsedData)
+    //   } else {
+    //     messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
+    //   }
+    // } catch (err) {
+    //   clearInterval(loadInterval)
+    //   messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
+    //   console.log("err:" + " " + err);
+    // }
 
   }
 

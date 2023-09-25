@@ -182,7 +182,7 @@ const handleSubmit = async (e) => {
         typeText(messageDiv, parsedData)
       })
       .catch(function (error) {
-        messageDiv.innerHTML = "【网络错误】请重新尝试，如仍然失败，请关闭梯子重新尝试😅"
+        messageDiv.innerHTML = "【通知】由于后端服务器升级，本服务暂时停止，预计10.7后恢复ヾ(•ω•`)o"
         clearInterval(loadInterval)
         console.log(error);
       });

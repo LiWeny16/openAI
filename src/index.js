@@ -182,7 +182,7 @@ const handleSubmit = async (e) => {
         typeText(messageDiv, parsedData)
       })
       .catch(function (error) {
-        messageDiv.innerHTML = "【通知】由于后端服务器升级，本服务暂时停止，预计10.7后恢复ヾ(•ω•`)o"
+        messageDiv.innerHTML = "【通知】由于后端服务器升级，本服务暂时停止维护，预计10.7后恢复ヾ(•ω•`)o"
         clearInterval(loadInterval)
         console.log(error);
       });

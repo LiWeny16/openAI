@@ -1,31 +1,28 @@
-import kit from "https://unpkg.com/bigonion-kit@0.11.2/esm/esm-kit.mjs"
-import hljs from "https://npm.elemecdn.com/@highlightjs/cdn-assets@11.6.0/es/highlight.min.js"
-import { marked } from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
-import axios from "axios"
-import "./public/jsScript/mdParser.js"
+import kit from "https://unpkg.com/bigonion-kit@0.11.2/esm/esm-kit.mjs";
+import hljs from "https://npm.elemecdn.com/@highlightjs/cdn-assets@11.6.0/es/highlight.min.js";
+import { marked } from "https://npm.elemecdn.com/marked/lib/marked.esm.js";
+import axios from "axios";
+import "./public/jsScript/mdParser.js";
 
 /**
  * @description 导入Svg资源
-*/
-import botSvg from "@Image/bot.svg"
-import userSvg from "@Image/user.svg"
+ */
+import botSvg from "@Image/bot.svg";
+import userSvg from "@Image/user.svg";
 
+import "./public/cssStyle/markdown-github-dark.css";
+import "./public/cssStyle/markdown-github.css";
+import "./public/cssStyle/hljs.min.css";
 
-import "./public/cssStyle/markdown-github-dark.css"
-import "./public/cssStyle/markdown-github.css"
-import "./public/cssStyle/hljs.min.css"
+import "./public/cssStyle/md.css";
+import "./public/cssStyle/keyframes.css";
+import "./public/cssStyle/response.css";
+import "./public/cssStyle/index.css";
+import "./public/cssStyle/main.css";
 
-import "./public/cssStyle/md.css"
-import "./public/cssStyle/keyframes.css"
-import "./public/cssStyle/response.css"
-import "./public/cssStyle/index.css"
-import "./public/cssStyle/main.css"
-
-
-
-
-const form = document.querySelector('form')
-const chatContainer = document.querySelector('#chat_container')
+const form = document.querySelector("form");
+const chatContainer = document.querySelector("#chat_container");
+const line = 2;
 
 //////////////
 class settingsClass {
@@ -39,77 +36,81 @@ class settingsClass {
 }
 
 function allInit() {
-  const settings = new settingsClass()
-  settings.markedInit()
+  const settings = new settingsClass();
+  settings.markedInit();
 }
-allInit()
+allInit();
 //////////////
 
-let loadInterval
+let loadInterval;
 
 function loader(ele) {
-  ele.textContent = ""
+  ele.textContent = "";
   loadInterval = setInterval(() => {
-    ele.textContent += "."
+    ele.textContent += ".";
     if (ele.textContent === "....") {
-      ele.textContent = ""
+      ele.textContent = "";
     }
-  }, 300)
+  }, 300);
 }
 
 function typeText(element, text) {
   // let rawText = text
-  text = text.replace(/\n/g, "  \n")
+  text = text.replace(/\n/g, "  \n");
 
   return new Promise((resolve) => {
-    let index = 0
+    let index = 0;
     let interval = setInterval(() => {
-
       if (index < text.length) {
         if (index == 0 || index == 1) {
-          goToFooter(document.getElementById("chat_container"))
+          goToFooter(document.getElementById("chat_container"));
         }
-        element.innerHTML += text[index]
-        element.innerHTML = element.innerHTML.replace(/  \n/g, "<br />")
-        if (element.innerHTML.match(/```/g) ? (element.innerHTML.match(/```/g).length % 2 === 0) : false) {
-          element.innerHTML = marked.parse(text.substring(0, index + 1))
-          hljs.highlightAll()
-          goToFooter(document.getElementById("chat_container"))
+        element.innerHTML += text[index];
+        element.innerHTML = element.innerHTML.replace(/  \n/g, "<br />");
+        if (
+          element.innerHTML.match(/```/g)
+            ? element.innerHTML.match(/```/g).length % 2 === 0
+            : false
+        ) {
+          element.innerHTML = marked.parse(text.substring(0, index + 1));
+          hljs.highlightAll();
+          goToFooter(document.getElementById("chat_container"));
         }
-        if (document.getElementById("chat_container").scrollHeight - (document.getElementById("chat_container").scrollTop + document.getElementById("chat_container").clientHeight) < 45) {
-          goToFooter(document.getElementById("chat_container"))
+        if (
+          document.getElementById("chat_container").scrollHeight -
+            (document.getElementById("chat_container").scrollTop +
+              document.getElementById("chat_container").clientHeight) <
+          45
+        ) {
+          goToFooter(document.getElementById("chat_container"));
         }
 
-        index++
-      }
-      else if (index == text.length) {
+        index++;
+      } else if (index == text.length) {
         // let mdText = marked.parse(text.replace(/\n /g, "<br />"))
-        element.innerHTML = marked.parse(text)
-        hljs.highlightAll()
-        goToFooter(document.getElementById("chat_container"))
-        index++
+        element.innerHTML = marked.parse(text);
+        hljs.highlightAll();
+        goToFooter(document.getElementById("chat_container"));
+        index++;
+      } else {
+        clearInterval(interval);
       }
-      else {
-        clearInterval(interval)
-      }
-
-    }, 25)
-    resolve("end")
-  })
+    }, 25);
+    resolve("end");
+  });
 }
 
 function generateUniqueId() {
-  const timestamp = Date.now()
-  const randomNumber = Math.random()
-  const hexadecimalString = randomNumber.toString(16)
+  const timestamp = Date.now();
+  const randomNumber = Math.random();
+  const hexadecimalString = randomNumber.toString(16);
 
-  return `id-${timestamp}-${hexadecimalString}`
+  return `id-${timestamp}-${hexadecimalString}`;
 }
 
 function chatStripe(isAi, value, uniqueId) {
-  return (
-    `
-        <div class= "wrapper ${isAi && 'ai'}">
+  return `
+        <div class= "wrapper ${isAi && "ai"}">
             <div class = "chat">
                 <div class= "profile">
                     <img 
@@ -121,120 +122,139 @@ function chatStripe(isAi, value, uniqueId) {
                 <div class="message markdown-body-dark" id=${uniqueId}>${value}</div>
             </div>
         <div>
-        `
-  )
+        `;
 }
 
 const handleSubmit = async (e) => {
-  e.preventDefault()
+  e.preventDefault();
 
-  const data = new FormData(form)
-  if (data.get('prompt').replace(/(\s)|(\\n)/g, "") === "") {
-    alert("你啥都没输入！")
+  const data = new FormData(form);
+  if (data.get("prompt").replace(/(\s)|(\\n)/g, "") === "") {
+    alert("你啥都没输入！");
   } else {
-    chatContainer.innerHTML += chatStripe(false, data.get('prompt'), "yourQues") //data.get('表单的name属性 ')
-    form.reset()
-    const uniqueId = generateUniqueId()
-    chatContainer.innerHTML += chatStripe(true, '', uniqueId)
-    chatContainer.scrollTop = chatContainer.scrollHeight
-    const messageDiv = document.getElementById(uniqueId)
+    chatContainer.innerHTML += chatStripe(
+      false,
+      data.get("prompt"),
+      "yourQues"
+    ); //data.get('表单的name属性 ')
+    form.reset();
+    const uniqueId = generateUniqueId();
+    chatContainer.innerHTML += chatStripe(true, "", uniqueId);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    const messageDiv = document.getElementById(uniqueId);
 
-    loader(messageDiv)
+    loader(messageDiv);
 
+    let dataSendALl = {
+      line1: JSON.stringify({
+        messages: [
+          {
+            content: data.get("prompt"),
+            role: "user",
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        stream: false,
+        // "text_moderation": true
+      }),
+      line2: JSON.stringify({
+        message: [
+          {
+            content: data.get("prompt"),
+            role: "user",
+          },
+        ],
+        mode: "chinchilla:0",
+        key: null,
+      }),
+    };
 
-    var data_send = JSON.stringify({
-      "messages": [
-        {
-          "content": data.get('prompt'),
-          "role": "user"
-        }
-      ],
-      "model": "gpt-3.5-turbo",
-      "stream": false,
-      // "text_moderation": true
-    });
-
-    var config = {
-      method: 'post',
-      url: 'https://go.every-api.com/v1/chat/completions',
-      headers: {
-        'Authorization': 'Bearer argyhl-mKcVN6MEnHZQRCtG213iDtTO4iix4PimROUcQS783OCvkRdk',
-        'Content-Type': 'application/json'
+    let axiosConfig = {
+      config1: {
+        method: "post",
+        url: "https://go.every-api.com/v1/chat/completions",
+        headers: {
+          Authorization:
+            "Bearer argyhl-mKcVN6MEnHZQRCtG213iDtTO4iix4PimROUcQS783OCvkRdk",
+          "Content-Type": "application/json",
+        },
+        data: dataSendALl.line1,
       },
-      data: data_send
+      config2: {
+        method: "post",
+        url: "https://bak.zaiwenai.top/message_poe",
+        data: dataSendALl.line2,
+      },
     };
     // 请不要盗取我的Token，仅供大家学习使用，token是真金白银买的
-    axios(config)
-      .then(function (response) {
-        let answer
-        try {
-          answer= response.data.choices[0].message.content
-        } catch (error) {
-          messageDiv.innerHTML = "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫"
-        }
-        let parsedData = answer.replace(/\&lt;/g, `<`)
-        parsedData = parsedData.replace(/\&gt;/g, `>`)
 
-        return parsedData
-      }).then((parsedData) => {
-        clearInterval(loadInterval)
-        messageDiv.innerHTML = ""
-        typeText(messageDiv, parsedData)
-      })
-      .catch(function (error) {
-        messageDiv.innerHTML = "【通知】由于后端服务器升级，本服务暂时停止维护，预计10.7后恢复ヾ(•ω•`)o"
-        clearInterval(loadInterval)
-        console.log(error);
-      });
-    //fetch 
-    // http://47.113.229.110:8082
-    // http://127.0.0.1:5500/client/#
-    // try {
-    //   const response = await fetch('https://api.bigonion.cn/', {
-    //     method: "POST",
-    //     headers: {
-    //       'Content-Type': "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //       prompt: data.get('prompt')
-    //     })
-    //   })
-    //   clearInterval(loadInterval)
-    //   messageDiv.innerHTML = ""
-    //   if (response.ok) {
-    //     const data = await response.json()
-    //     let parsedData
-    //     try {
-    //       parsedData = data.bot.trim()
-    //     } catch (error) {
-    //       console.log(data.bot);
-    //     }
+    switch (line) {
+      case 1:
+        axios(axiosConfig.config1)
+          .then(function (response) {
+            let answer;
+            try {
+              console.log(response);
+              answer = response.data.choices[0].message.content;
+            } catch (error) {
+              messageDiv.innerHTML =
+                "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫";
+            }
+            let parsedData = answer.replace(/\&lt;/g, `<`);
+            parsedData = parsedData.replace(/\&gt;/g, `>`);
 
-    //     parsedData = parsedData.replace(/\&lt;/g, `<`)
-    //     parsedData = parsedData.replace(/\&gt;/g, `>`)
-    //     console.log(parsedData);
-    //     // parsedData = marked.parse(parsedData)
-    //     // messageDiv.innerHTML =parsedData
-    //     typeText(messageDiv, parsedData)
-    //   } else {
-    //     messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
-    //   }
-    // } catch (err) {
-    //   clearInterval(loadInterval)
-    //   messageDiv.innerHTML = "【网络错误】由于本人事务繁杂，8月之前暂时停止维护"
-    //   console.log("err:" + " " + err);
-    // }
+            return parsedData;
+          })
+          .then((parsedData) => {
+            clearInterval(loadInterval);
+            messageDiv.innerHTML = "";
+            typeText(messageDiv, parsedData);
+          })
+          .catch(function (error) {
+            messageDiv.innerHTML =
+              "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫";
+            clearInterval(loadInterval);
+            console.log(error);
+          });
+        break;
 
+      case 2:
+        axios(axiosConfig.config2)
+          .then(function (response) {
+            let answer;
+            try {
+              answer = response.data
+            } catch (error) {
+              messageDiv.innerHTML =
+                "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫";
+            }
+            let parsedData = answer.replace(/\&lt;/g, `<`);
+            parsedData = parsedData.replace(/\&gt;/g, `>`);
+
+            return parsedData;
+          })
+          .then((parsedData) => {
+            clearInterval(loadInterval);
+            messageDiv.innerHTML = "";
+            typeText(messageDiv, parsedData);
+          })
+          .catch(function (error) {
+            messageDiv.innerHTML =
+              "【解析错误】请重新尝试，如仍然失败，请联系大聪花😫";
+            clearInterval(loadInterval);
+            console.log(error);
+          });
+        break;
+    }
   }
+};
 
-}
-
-form.addEventListener('submit', handleSubmit)
-form.addEventListener('keydown', (e) => {
+form.addEventListener("submit", handleSubmit);
+form.addEventListener("keydown", (e) => {
   if (e.keyCode === 13 && e.ctrlKey) {
-    handleSubmit(e)
+    handleSubmit(e);
   }
-})
+});
 
 function goToFooter(ele) {
   var div = ele;
@@ -252,42 +272,41 @@ function goToFooter(ele) {
  */
 function similar(s, t, f) {
   if (!s || !t) {
-    return 0
+    return 0;
   }
   if (s === t) {
     return 100;
   }
-  var l = s.length > t.length ? s.length : t.length
-  var n = s.length
-  var m = t.length
-  var d = []
-  f = f || 2
+  var l = s.length > t.length ? s.length : t.length;
+  var n = s.length;
+  var m = t.length;
+  var d = [];
+  f = f || 2;
   var min = function (a, b, c) {
-    return a < b ? (a < c ? a : c) : (b < c ? b : c)
-  }
-  var i, j, si, tj, cost
-  if (n === 0) return m
-  if (m === 0) return n
+    return a < b ? (a < c ? a : c) : b < c ? b : c;
+  };
+  var i, j, si, tj, cost;
+  if (n === 0) return m;
+  if (m === 0) return n;
   for (i = 0; i <= n; i++) {
-    d[i] = []
-    d[i][0] = i
+    d[i] = [];
+    d[i][0] = i;
   }
   for (j = 0; j <= m; j++) {
-    d[0][j] = j
+    d[0][j] = j;
   }
   for (i = 1; i <= n; i++) {
-    si = s.charAt(i - 1)
+    si = s.charAt(i - 1);
     for (j = 1; j <= m; j++) {
-      tj = t.charAt(j - 1)
+      tj = t.charAt(j - 1);
       if (si === tj) {
-        cost = 0
+        cost = 0;
       } else {
-        cost = 1
+        cost = 1;
       }
-      d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost)
+      d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
     }
   }
-  let res = (1 - d[n][m] / l) * 100
-  return res.toFixed(f)
+  let res = (1 - d[n][m] / l) * 100;
+  return res.toFixed(f);
 }
-

@@ -1,6 +1,6 @@
 import aboutMd from "../source/about.md?raw"
 import * as marked_esm from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
-import shutDownSvgSrc from "@Image/关闭.svg"
+import shutDownSvgSrc from "@Assets/关闭.svg"
 let shutDownSvg = `
 <div class="closeBox" id="closeAbout">
 <img id="closeAboutSvg" class="closeSvg" src=${shutDownSvgSrc} alt="shut">

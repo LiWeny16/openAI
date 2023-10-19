@@ -7,8 +7,8 @@ import "./public/jsScript/mdParser.js";
 /**
  * @description 导入Svg资源
  */
-import botSvg from "@Image/bot.svg";
-import userSvg from "@Image/user.svg";
+import botSvg from "@Assets/bot.svg";
+import userSvg from "@Assets/user.svg";
 
 import "./public/cssStyle/markdown-github-dark.css";
 import "./public/cssStyle/markdown-github.css";
@@ -22,7 +22,7 @@ import "./public/cssStyle/main.css";
 
 const form = document.querySelector("form");
 const chatContainer = document.querySelector("#chat_container");
-const line = 2;
+const line = 1;
 
 //////////////
 class settingsClass {

@@ -22,7 +22,7 @@ import "./public/cssStyle/main.css";
 
 const form = document.querySelector("form");
 const chatContainer = document.querySelector("#chat_container");
-const line = 2;
+const line = 1;
 
 //////////////
 class settingsClass {

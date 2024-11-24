@@ -415,6 +415,11 @@ axios@^1.4.0:
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
+bigonion-kit@^0.12.6:
+  version "0.12.6"
+  resolved "https://registry.npmmirror.com/bigonion-kit/-/bigonion-kit-0.12.6.tgz#fee79875c879b27a5f301b7bc95822fcd4af6dff"
+  integrity sha512-hn7v6HNj7pe+5/wM/RF+MTbVpufCj8S9orcUbQnugWHKJfYhKywf9Yd/94h7D/1e1YbqFkX9ExsMs+tOA8Wpkg==
+
 browserslist@^4.21.9:
   version "4.22.1"
   resolved "https://registry.npmmirror.com/browserslist/-/browserslist-4.22.1.tgz#ba91958d1a59b87dab6fed8dfbcb3da5e2e9c619"

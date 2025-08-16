@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/static/favicon-2ad3fe0f.ico" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon-DRoEvCF-.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- seo -->
@@ -44,8 +44,8 @@
     <script>
       let nowLocation = window.location.href;
     </script>
-    <script type="module" crossorigin src="/static/index-c92dac8b.js"></script>
-    <link rel="stylesheet" href="/static/index-63a8e506.css">
+    <script type="module" crossorigin src="/static/index-xVn5xIs4.js"></script>
+    <link rel="stylesheet" crossorigin href="/static/index-DdTlmZP6.css">
   </head>
 
   <body>
@@ -59,10 +59,11 @@
         <div id="headerInner">
           <div id="headerLeft">
             <a class="noStylelabel" href="http://ai.bigonion.cn/">
-              <p2>ChatGPT3.5 OpenAi</p2>
+              <p2>ChatGLM4.5 OpenAI</p2>
             </a>
           </div>
-          <div id=" headerRight">
+         
+          <div id="headerRight">
             <a class="noStylelabel" href="https://bigonion.cn">
               <p2>首页</p2>
             </a>
@@ -74,6 +75,20 @@
       </div>
       <div id="app">
         <div id="chat_container"></div>
+        <div id="controls">
+          <div class="control-group">
+            <label class="switch">
+              <input type="checkbox" id="webSearchToggle">
+              <span class="slider">联网搜索</span>
+            </label>
+          </div>
+          <div class="control-group">
+            <label class="switch">
+              <input type="checkbox" id="thinkingToggle" checked>
+              <span class="slider">深度思考</span>
+            </label>
+          </div>
+        </div>
         <form id="formBox">
           <textarea
             id="inputArea"
@@ -83,7 +98,7 @@
             placeholder="Ask chatGPT..."
           ></textarea>
           <button type="submit">
-            <img src="/static/send-f2246764.svg" alt="网络错误" />
+            <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20fill='%23ffffff'%20viewBox='0%200%2024%2024'%20stroke-width='1.5'%20stroke='currentColor'%20class='w-6%20h-6'%3e%3cpath%20stroke-linecap='round'%20stroke-linejoin='round'%20d='M6%2012L3.269%203.126A59.768%2059.768%200%200121.485%2012%2059.77%2059.77%200%20013.27%2020.876L5.999%2012zm0%200h7.5'%20/%3e%3c/svg%3e" alt="网络错误" />
           </button>
         </form>
       </div>
@@ -92,7 +107,6 @@
           <article id="view-area" class="markdown-body" />
         </div>
       </div>
-      
     </div>
   </body>
 </html>

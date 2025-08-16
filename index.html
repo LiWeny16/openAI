@@ -57,10 +57,11 @@
         <div id="headerInner">
           <div id="headerLeft">
             <a class="noStylelabel" href="http://ai.bigonion.cn/">
-              <p2>ChatGPT3.5 OpenAi</p2>
+              <p2>ChatGLM4.5 OpenAI</p2>
             </a>
           </div>
-          <div id=" headerRight">
+         
+          <div id="headerRight">
             <a class="noStylelabel" href="https://bigonion.cn">
               <p2>首页</p2>
             </a>
@@ -72,6 +73,20 @@
       </div>
       <div id="app">
         <div id="chat_container"></div>
+        <div id="controls">
+          <div class="control-group">
+            <label class="switch">
+              <input type="checkbox" id="webSearchToggle">
+              <span class="slider">联网搜索</span>
+            </label>
+          </div>
+          <div class="control-group">
+            <label class="switch">
+              <input type="checkbox" id="thinkingToggle" checked>
+              <span class="slider">深度思考</span>
+            </label>
+          </div>
+        </div>
         <form id="formBox">
           <textarea
             id="inputArea"

@@ -1,0 +1,120 @@
+/* 控制开关样式 */
+#controls {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #40414f;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #565869;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 34px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #565869;
+  transition: .4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dcdcdc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #10a37f;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #10a37f;
+}
+
+input:checked + .slider:before {
+  transform: translateX(86px);
+}
+
+/* 状态指示器样式 */
+.status-indicator {
+  font-size: 12px;
+  color: #10a37f;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  background: rgba(16, 163, 127, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(16, 163, 127, 0.3);
+  display: inline-block;
+  font-weight: 500;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 768px) {
+  #controls {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 10px;
+  }
+  
+  .switch {
+    width: 100px;
+    height: 30px;
+  }
+  
+  .slider {
+    font-size: 12px;
+  }
+  
+  .slider:before {
+    height: 22px;
+    width: 22px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(70px);
+  }
+  
+  .status-indicator {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}

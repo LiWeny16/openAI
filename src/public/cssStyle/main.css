@@ -178,6 +178,33 @@ form img {
   height: 100%;
 }
 
+#headerCenter {
+  flex: 1;
+  text-align: center;
+}
+
+.feature-hint {
+  font-size: 0.7em;
+  color: #10a37f;
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+  #headerInner {
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+  }
+  
+  #headerCenter {
+    order: 3;
+  }
+  
+  .feature-hint {
+    font-size: 0.6em;
+  }
+}
+
 #formBox {
   border-top-right-radius: 14px;
   border-top-left-radius: 14px;

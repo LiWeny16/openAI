@@ -11,6 +11,8 @@ export default defineConfig({
     alias: {
       "@Assets": resolve(__dirname, "./assets"),
     },
+
   },
 //   plugins: [[react()]],
 });
+
